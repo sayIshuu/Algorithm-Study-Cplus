@@ -1,4 +1,4 @@
-//BJ4673 셀프 넘버 실4 언타멘토링 2주차
+//BJ4673 셀프 넘버 실5 언타멘토링 2주차
 #include <iostream>
 using namespace std;
 
