@@ -1,3 +1,4 @@
+//BJ1978 소수 찾기 실4 언타멘토링 1주차
 #include <iostream>
 using namespace std;
 
