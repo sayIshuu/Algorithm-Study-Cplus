@@ -51,7 +51,7 @@ int main(void)
                         // 윗변의 길이랑 두 세로변의 길이가 같은지 확인, 지금 조건까지 걸러내면 정사각형인데 그 정사각형이 기존 solution보다 큰지 확인하고 solution 최신화
                         if(array[x+tempLength-1][y]==array[x][y] && array[x+tempLength-1][m-p]==array[x][y] && tempLength*tempLength > solution)
                         {
-                            solution = tempLength*tempLength;
+                            solution = tempLength*tempLength; 
                         }
                     }
                 }
