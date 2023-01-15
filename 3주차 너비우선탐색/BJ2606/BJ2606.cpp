@@ -1,8 +1,18 @@
-//BJ2606 바이러스 실3 언타멘토링 3주차 프리뷰
+//BJ2606 바이러스 실3 언타멘토링 3주차 프리뷰 너비우선탐색
 #include <iostream>
-#include <list>
-
+//#include <list>
+#include <vector> // 피드백따라서 list가 아닌 vector로 인접리스트 및 큐 구현해보겠음
+#include <queue>
 using namespace std;
+
+/* 문제 아이디어 - 2 인접리스트 이용한 구현
+그래프 구현과 동시에 각 노드의 인접리스트 작성 by vector
+큐 구현, 1 push...1방문체크
+큐 맨앞 노드(1) 인접리스트 가져와서 방문체크 후 큐에 push하고 방문체크, 1 pop
+반복
+큐 empty되면 종료. pop할때마다 count해서 정답은 count-1;
+*/
+// 너비우선탐색은 선입선출인 큐로 구현한다.
 
 int main(void)
 {
@@ -13,38 +23,48 @@ int main(void)
     int l;
     cin >> l;
 
-    list<int> arr[n];     // -1 신경쓰기
-    int check[n] = {0,};  // 0이면 해당되는 정점 방문 안한것
+    vector<vector<int>> nearList(101);
+    vector<int> v;     // -1 신경쓰기
+    nearList.push_back(v);
+    int check[101] = {0,};  // 0이면 해당되는 정점 방문 안한것 1이면 참 => 그대로 조건으로 활용해도 댐.
 
     //인접리스트 만들기
     for (int i = 0; i < l; i++)
     {
         int x,y;
         cin >> x >> y;
-        arr[x].push_back(y);
-        arr[y].push_back(x);
+        nearList[x].push_back(y);
+        nearList[y].push_back(x);
     }
     
-    //너비우선탐색 시작
-    list<int> q;
 
-    q.push_front(1);
-    check[0] = 1;
+    queue<int> q;
+    int count = -1;
 
-    int count = 0;
+    q.push(1);
+    check[1] = 1;
 
-    for (int i = 0; i <= arr[q.front-1].size()/*q의 맨앞원소의 인접리스트*/; i++)
+    while (!q.empty())
     {
-        if (check[arr[q.front-1].front()-1] == 0)
+        //큐 맨앞 요소의 인접리스트(nearList[q.front()])를 큐에 push
+        for (int i = 0; i < nearList[q.front()].size(); i++)
         {
-            check[arr[q.front-1].front()-1] = 1;
-            q.push_back(arr[q.front-1].pop_front());
-            count++;
+            if(check[nearList[q.front()][i]] == 0)
+            {
+                q.push(nearList[q.front()][i]);
+                check[nearList[q.front()][i]] = 1;
+            }
         }
+        q.pop();
+        count++;
     }
-
-
-
+    
+    
     cout << count << endl;
+    
     return 0;
 }
+
+
+//test vector nearlist에서 크기 지정 안하는법
+//test while문에서 queue.push(nearlist) 되는지
