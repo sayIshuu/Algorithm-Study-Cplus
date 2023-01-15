@@ -14,6 +14,9 @@ using namespace std;
 */
 // 너비우선탐색은 선입선출인 큐로 구현한다.
 
+
+
+
 int main(void)
 {
     //정점개수
@@ -23,10 +26,13 @@ int main(void)
     int l;
     cin >> l;
 
-    vector<vector<int>> nearList(101);
-    vector<int> v;     // -1 신경쓰기
+    //인덱스 -1 신경안쓰려고 101. 0번인덱스는 안씀
+    vector<vector<int>> nearList(101);  
+    vector<int> v;     
     nearList.push_back(v);
-    int check[101] = {0,};  // 0이면 해당되는 정점 방문 안한것 1이면 참 => 그대로 조건으로 활용해도 댐.
+
+    //방문체크) 0이면 해당되는 정점 방문 안한것 1이면 참 => 그대로 조건으로 활용해도 댐.
+    int check[101] = {0,};  
 
     //인접리스트 만들기
     for (int i = 0; i < l; i++)
@@ -39,6 +45,7 @@ int main(void)
     
 
     queue<int> q;
+    //pop한 개수-1이 답이라서 count = -1;
     int count = -1;
 
     q.push(1);
@@ -46,13 +53,14 @@ int main(void)
 
     while (!q.empty())
     {
+        vector<int> firstList(nearList[q.front()]);
         //큐 맨앞 요소의 인접리스트(nearList[q.front()])를 큐에 push
-        for (int i = 0; i < nearList[q.front()].size(); i++)
+        for (int i = 0; i < firstList.size(); i++)
         {
-            if(check[nearList[q.front()][i]] == 0)
+            if(check[firstList[i]] == 0)
             {
-                q.push(nearList[q.front()][i]);
-                check[nearList[q.front()][i]] = 1;
+                q.push(firstList[i]);
+                check[firstList[i]] = 1;
             }
         }
         q.pop();
