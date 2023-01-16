@@ -10,6 +10,7 @@ int main(void)
 
     vector<int> Pcount(101);
     vector<int> Mcount(101);
+    //vector<int> v(n+1); ¿Ã∞≈ ø÷ æ»µ≈
     vector<int> v(101);
 
     for (int i = 1; i <= n; i++)
