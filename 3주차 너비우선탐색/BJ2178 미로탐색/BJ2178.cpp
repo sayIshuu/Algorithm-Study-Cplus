@@ -36,59 +36,62 @@ int main(void)
 
 
     //큐가 미로의 위치정보를 가지고 있어야함 => 구조체
-    //(0,0)을 기준으로 먼저 넣어줌
-    //상하좌우 체크해서 푸쉬해주면서 미로값을 0으로 전환 => 방문체크
-    //푸쉬할때 논리적 거리를 계층변수로 두어 푸쉬된 각각의 요소가
-    //거리정보를 가지고 있게함.
-    //목적지 도착하면 거리정보 출력하고 break;
-
     queue<Node> q;
+    //기준이 될 맨앞칸 푸쉬 후 방문체크, 계층은 1부터 시작.
     q.push({0,0,1});
+    miro[0][0] = 0;
     
     while (!q.empty())
     {
         Node front = q.front();
+        int x = front.N;
+        int y = front.M;
         //목적지 도착하면 목적지 레벨 출력하고 끝
         if(q.back().N == n-1 && q.back().M == m-1)
         {
-            cout << q.back().level;
+            cout << q.back().level << endl;
             break;
         }
+
+        //상하좌우 범위, 방문체크해서 push와 동시에 방문체크까지.
         //우
-        if(front.N+1 >= 0 && front.N+1 < n)
+        if(x+1 >= 0 && x+1 < n)
         {
-            if(miro[front.N+1][front.M] == 1)
+            if(miro[x+1][y] == 1)
             {
-                q.push({front.N+1,front.M,front.level+1});
+                q.push({x+1,y,front.level+1});
+                miro[x+1][y] = 0;
             }
         }
         //하
-        if(front.M+1 >= 0 && front.M+1 < m)
+        if(y+1 >= 0 && y+1 < m)
         {
-            if(miro[front.N][front.M+1] == 1)
+            if(miro[x][y+1] == 1)
             {
-                q.push({front.N,front.M+1,front.level+1});
+                q.push({x,y+1,front.level+1});
+                miro[x][y+1] = 0;
             }
         }
         //좌
-        if(front.N-1 >= 0 && front.N-1 < n)
+        if(x-1 >= 0 && x-1 < n)
         {
-            if(miro[front.N-1][front.M] == 1)
+            if(miro[x-1][y] == 1)
             {
-                q.push({front.N-1,front.M,front.level+1});
+                q.push({x-1,y,front.level+1});
+                miro[x-1][y] = 0;
             }
         }
         //상
-        if(front.M-1 >= 0 && front.M-1 < m)
+        if(y-1 >= 0 && y-1 < m)
         {
-            if(miro[front.N][front.M-1] == 1)
+            if(miro[x][y-1] == 1)
             {
-                q.push({front.N,front.M-1,front.level+1});
+                q.push({x,y-1,front.level+1});
+                miro[x][y-1] = 0;
             }
         }
 
-        //맨앞노드 방문체크하고 팝
-        miro[front.N][front.M] = 0;
+        //맨앞노드 팝
         q.pop(); 
     }
     return 0;
