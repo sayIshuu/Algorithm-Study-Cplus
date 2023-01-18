@@ -63,7 +63,7 @@ void bfs(int tx, int ty) // 인자는 처음 들어가는 값
             }
         }
     }
-
+    //일단 방금 뽑은 단지의 집 수 추가. 정렬은 나중에
     num.push_back(count);
 }
 
