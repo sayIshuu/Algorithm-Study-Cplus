@@ -48,7 +48,7 @@ void bfs(int tx, int ty) // 인자는 처음 들어가는 값
             int nx = x + dx[i];
             int ny = y + dy[i];
             // 미로 공간을 벗어난 경우 무시
-            if(nx < 0 || nx > n || ny < 0 || ny > n) continue;
+            if(nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
 
             // 이동할 수 없는 칸인 경우 무시
             if(map[nx][ny] == 0) continue;
