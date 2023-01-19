@@ -29,12 +29,6 @@ void bfs()
     // 큐가 빌 때까지 반복
     while (!q.empty())
     {
-        //목적지 도착하면 목적지 레벨 출력하고 끝
-        if(q.back().x == n-1 && q.back().y == m-1)
-        {
-            cout << q.back().level << endl;
-            break;
-        }
         int x = q.front().x;
         int y = q.front().y;
         int level = q.front().level;
@@ -56,11 +50,16 @@ void bfs()
                 //방문체크
                 miro[nx][ny] = 0;
                 q.push({nx, ny, level+1});
+                //목적지 도착하면 목적지 레벨 출력하고 끝
+                if(q.back().x == n-1 && q.back().y == m-1)
+                {
+                    cout << q.back().level << endl;
+                    break;
+                }
             }
         }
     }
 }
-
 
 
 
