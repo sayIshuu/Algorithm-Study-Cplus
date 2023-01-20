@@ -10,7 +10,8 @@ using namespace std;
     구조체활용한 큐.. x,y,time
 
     먼저 map을 한바퀴 돌며 1위치 다 찾아낸다.
-    각각의 1 위치를 시작점으로한 큐를 vector<queue<Node>> list;로 받는다.
+    각각의 1 위치를 시작점으로한 큐를 queue<Node>로 받는다.
+    어차피 노드에 위치변수가 있고 푸쉬,팝하는 반복문이 첫번째 노드 '하나'를 가지고 돌리기때문에 큐배열을 굳이 안구현해도댐. 이거때문에 메모리초과 뜸
     반복문에서 큐의 인덱스를 돌리고
      반복문코드에서 bfs()한바퀴씩만 돌림.
      bfs()가 안돌때 time이 답.
@@ -24,6 +25,7 @@ typedef struct node
 {
     int x;
     int y;
+    int level;
 }Node;
 
 int dx[] = {0,0,1,-1};
@@ -53,7 +55,7 @@ int main(void)
 
 
     //1찾으면 큐형으로 벡터에 넣기
-    vector<queue<Node>> list;
+    queue<Node> q;
 
     for (int i = 0; i < n; i++)
     {
@@ -61,53 +63,39 @@ int main(void)
         {
             if(map[i][j] == 1)
             {
-                queue<Node> temp;
-                temp.push({i,j});
-                list.push_back(temp);
+                q.push({i,j,0});
             }
         }   
     }
 
 
+
     int time = 0;
-    while(true)
+    while (!q.empty())
     {
-        int temp = 0;
-        for (int j = 0; j < list.size(); j++)
+        int x = q.front().x;
+        int y = q.front().y;
+        int level = q.front().level;
+        q.pop();
+        // 현재 위치에서 상하좌우확인
+        for (int i = 0; i < 4; i++)
         {
-            int k = list[j].size();
-            while(k--)
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            // 미로 공간을 벗어난 경우 무시
+            if(nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
+
+            // 처음 방문 & 이동 가능
+            if (map[nx][ny] == 0)
             {
-                // list[j]로 bfs한바퀴씩.
-                int x = list[j].front().x;
-                int y = list[j].front().y;
-                list[j].pop();
-                // 현재 위치에서 상하좌우확인
-                for (int i = 0; i < 4; i++)
-                {
-                    int nx = x + dx[i];
-                    int ny = y + dy[i];
-                    // 미로 공간을 벗어난 경우 무시
-                    if(nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-
-                    // 이동할 수 없는 칸인 경우 무시
-                    if(map[nx][ny] != 0) continue;
-
-                    // 처음 방문 & 이동 가능
-                    if (map[nx][ny] == 0)
-                    {
-                        //방문체크
-                        map[nx][ny] = 1;
-                        list[j].push({nx,ny});
-                        temp++;
-                    }
-                }
+                //방문체크
+                map[nx][ny] = 1;
+                q.push({nx, ny, level+1});
             }
         }
-        if(temp == 0) break;
-        time++;
-    } 
-    
+        time = q.back().level;
+    }
+  
 
 
     for (int i = 0; i < n; i++)
