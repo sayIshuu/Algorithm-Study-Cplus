@@ -21,7 +21,6 @@ int main(void)
     int n, k;
     cin >> n >> k;
 
-    arr[k] = 2;
 
     //동생이 등잔밑이 어둡다 작전을 썼을때
     if(n==k) { cout << 0; return 0; }
