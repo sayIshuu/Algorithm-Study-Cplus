@@ -22,7 +22,7 @@ int main(void)
         if(str[i] == '+' || str[i] == '-')
         {
             if(beforeminus)
-                sum += stoi(number);
+                sum += stoi(number);    //문자열 -> 정수 캐스팅
             else
                 sum -= stoi(number);
             number = "";
