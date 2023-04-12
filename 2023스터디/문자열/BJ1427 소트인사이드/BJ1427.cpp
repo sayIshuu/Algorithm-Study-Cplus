@@ -25,3 +25,15 @@ int main(void)
 
     return 0;
 }
+
+/* sort함수 활용.
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main(void) {
+    string str;
+    cin>>str;
+    sort(str.begin(), str.end(), greater<char>());
+    cout<<str;
+}
+*/
