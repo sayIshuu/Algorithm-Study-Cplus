@@ -2,30 +2,31 @@
 #include <iostream>
 #define MAX 1000001
 using namespace std;
+//소수는 false
+bool isPrime[MAX] = {true, true, false,};
+int m, n;
 
-bool arr[MAX] = {true, true, false,};
-int main(void)
-{
-    int m, n;   cin >> m >> n;
-
-//========에라토스테네스의 체==================
+//에라토스테네스의 체
+void primeCheck(){
     for (int i = 2; i < MAX; i++)
     {
-        //이미 지워졌다면.
-        if(arr[i])
+        if(isPrime[i])
             continue;
-        else   //소수는 false 상태
-        {
-            for (int j = i+i; j < MAX; j+=i)
-            {
-                arr[j] = true;
-            }    
+        else{ //else 처리할때 시간복잡도가 빨라짐
+            for (int j = i+i; j < MAX; j+=i) // i+i 가 i*2보다 빠름
+                isPrime[j] = true;
         }
     }
-//==============================================
+}
+
+int main(void)
+{
+    cin >> m >> n;
+
+    primeCheck();
     for (int i = m; i <= n; i++)
     {
-        if(!arr[i])
+        if(!isPrime[i])
             cout << i << '\n';
     }
     
