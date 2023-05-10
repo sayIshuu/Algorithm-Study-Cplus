@@ -1,4 +1,4 @@
-//GCD 합 실4 유클리드 호제법 23.05.10   실2520 ->
+//GCD 합 실4 유클리드 호제법 23.05.10   실2520 -> 528
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -17,7 +17,7 @@ int main(void)
 
     for (int i = 0; i < t; i++)
     {
-        //(long long 주의!)(long long 주의!)(long long 주의!)(long long 주의!)
+//(long long 주의!)(long long 주의!)(long long 주의!)(long long 주의!)
         long long sum =0;
         int n; cin >> n;
         int arr[n];
