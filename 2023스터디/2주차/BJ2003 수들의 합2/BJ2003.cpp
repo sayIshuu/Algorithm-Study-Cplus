@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+//투포인터, 누적합
 int main(void)
 {
     ios::sync_with_stdio(false);
