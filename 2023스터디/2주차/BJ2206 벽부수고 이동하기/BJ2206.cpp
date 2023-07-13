@@ -7,7 +7,7 @@ using namespace std;
 
 int n,m;
 char map[1002][1002][2];
-//푸쉬할때 체크할 조건은 구조체가 아니라 map에 저장해놔야 한다 그래서 3차원배열
+//푸쉬할때 미리! 체크할 조건은 구조체가 아니라 map에 저장해놔야 한다 그래서 3차원배열
 typedef struct
 {
     int x;
