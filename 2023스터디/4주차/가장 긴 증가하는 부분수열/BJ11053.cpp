@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-
+//dp는 수열을 만들어 놓고 마지막 인덱스에 답이 오게끔하는게 답
+//그러므로 어떻게 30에 3, 50에 4가 올수있나 고민해보아야한다.
 int arr[1001];
 int ans[1001];
 
