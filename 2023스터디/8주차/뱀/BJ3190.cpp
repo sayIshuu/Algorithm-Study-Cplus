@@ -8,14 +8,14 @@ typedef struct
 }node;
 
 int n,k,l;
-int time = 1;
+int time;
 
 bool apple[101][101] = {0,};
 bool isFill[101][101] = {0,};
 
 deque<node> snake;
 
-deque<pair<int,int>> info;
+pair<int,int> info[10001];
 
 void input()
 {
@@ -34,10 +34,10 @@ void input()
         int s;  char c;
         cin >> s >> c;
 
-        if(c == 'L')
-            info.push_back({s,-1});
+        if(c == 'L')    // 실수 c='L'
+            info[s] = {1,-1};
         else if(c == 'D')
-            info.push_back({s,1});
+            info[s] = {1,1};
     }
 
     snake.push_front({1,1}); // 인덱스 0은 안쓴다
@@ -49,41 +49,39 @@ int dy[4] = {1,0,-1,0};
 int idex = 100;
 int dir = idex%4; // dir = 0
 
-void progress(pair<int,int> _info)
+void solve()
 {
-    int t = _info.first;
-    idex += _info.second;
-    dir = idex%4;
-    //cout << idex << dir << endl;
-    while(t--)
+    while(true)
     {
+        if(info[time].first == 1)
+        {
+            idex += info[time].second;
+            dir = idex%4;
+        }
+
         int x = snake.front().x;
         int y = snake.front().y;
         int nx = x + dx[dir];
         int ny = y + dy[dir];
-        cout << x << y << nx << ny << endl;
+
         if(nx <= 0 || ny <= 0 || nx > n || ny > n || isFill[nx][ny]){
-            info.clear();
-            cout << time;
+            cout << time+1;
             return;
         }
 
         if(apple[nx][ny]){
-            
             snake.push_front({nx,ny});
             isFill[nx][ny] = true;
             apple[nx][ny] = false;
-            time++;
-            continue;
         }
         else{
-            //cout << "여기가 한번은 들어가야지";
             snake.push_front({nx,ny});
             isFill[nx][ny] = true;
-            time++;
             isFill[snake.back().x][snake.back().y] = false;
             snake.pop_back();
         }
+
+        time++;
     }
 }
 
@@ -94,11 +92,7 @@ int main(void)
 
     input();
 
-    for (int i = 0; i < info.size(); i++)
-    {
-        cout << "------" << endl;
-        progress(info[i]);
-    }
+    solve();
 
     return 0;
 }
