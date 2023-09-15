@@ -8,13 +8,12 @@ long long sum[1050][1050];
 
 void solution(int a, int b, int x, int y)
 {
-    if(a == x)
-    {
-        cout << sum[x][y] - sum[a][b-1] << '\n';
-    }
-    else if (a == 1){
-        cout << sum[x][y] - sum[a][b-1] << '\n';
-    }
+    cout << sum[x][y] - sum[a-1][y] - sum[x][b-1] + sum[a-1][b-1] << '\n';
+}
+
+void get_sum(int i, int j)
+{
+    sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + arr[i][j];
 }
 
 int main(void)
@@ -28,11 +27,11 @@ int main(void)
         for (int j = 1; j <= n; j++)
         {
             cin >> arr[i][j];
-            sum[i][j] = arr[i][j] + sum[i][j-1];
+            get_sum(i, j);
         }
-        sum[i+1][0] = sum[i][n];
     }
     
+
     for (int i = 0; i < m; i++)
     {
         int a,b,x,y;
