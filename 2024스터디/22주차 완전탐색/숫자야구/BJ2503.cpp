@@ -1,11 +1,8 @@
 #include <iostream>
 using namespace std;
 
-//스트라이크와 총합
-
 int n;
 bool num[1000];
-
 
 int main(void)
 {
