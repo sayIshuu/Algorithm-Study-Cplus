@@ -8,9 +8,7 @@ void input(){
 }
 
 vector<int> ans;
-//중복 요소 없어서 방문체크
-bool visited[9];
-void backtracking(){
+void backtracking(int idx){
     if(ans.size() == m)
     {
         for(int i = 0; i < m; i++)
@@ -19,12 +17,9 @@ void backtracking(){
         return;
     }
 
-    for(int i = 1; i <= n; i++){
-        if(visited[i]) continue;
-        visited[i] = true;
+    for(int i = idx; i <= n; i++){
         ans.push_back(i);
-        backtracking();
-        visited[i] = false;
+        backtracking(i+1);
         ans.pop_back();
     }
 }
@@ -32,7 +27,7 @@ void backtracking(){
 void solve()
 {
     input();
-    backtracking();
+    backtracking(1);
 }
 
 int main(void)
