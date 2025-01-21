@@ -6,8 +6,8 @@
 
 using namespace std;
 
-map<string, int> cnt;
-map<string, vector<pair<int,int>>> m;
+unordered_map<string, int> cnt;
+unordered_map<string, vector<pair<int,int>>> m;
 
 bool compare(pair<string, int> a, pair<string, int> b){
     return a.second > b.second;
