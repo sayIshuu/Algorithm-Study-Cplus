@@ -5,58 +5,50 @@
 using namespace std;
 int l;
 string str;
-const int mod = 1000000007; // Å« ¼Ò¼ö
-
-//¹Ýº¹¹®ÀÚ¿­ ÀÖÀ¸¸é 1¹ÝÈ¯ ¾øÀ¸¸é -1¹ÝÈ¯
+const int mod = 1000000007; // í° ì†Œìˆ˜
+//ë°˜ë³µë¬¸ìžì—´ ìžˆìœ¼ë©´ 1ë°˜í™˜ ì—†ìœ¼ë©´ -1ë°˜í™˜
 int ravin_karp(int length)
 {
      if(length == 0) return -1;
-
-     //ÇÔ¼ö·Î »©¼­ ¸Ê ¼±¾ðÇØÁÖ¸é ±×¶§ ±×¶§ ÃÊ±âÈ­ ¾È ÇØÁàµµ µÊ
+     //í•¨ìˆ˜ë¡œ ë¹¼ì„œ ë§µ ì„ ì–¸í•´ì£¼ë©´ ê·¸ë•Œ ê·¸ë•Œ ì´ˆê¸°í™” ì•ˆ í•´ì¤˜ë„ ë¨
      unordered_map<int, int> hash_map;
      int hash = 0;
-     long long basepower = 1; //Á¦°ö¼ö
-
-     //ÇÏ³ª¸¦ °¡Áö°í ºñ±³ÇÏ´Â°ÍÀÌ¾Æ´Ï¶ó ÇØ½Ã¸ÊÀ» ¸¸µé°í ÇÑ¹ø¿¡ ºñ±³ÇÏ´Â °Í
+     long long basepower = 1; //ì œê³±ìˆ˜
+     //í•˜ë‚˜ë¥¼ ê°€ì§€ê³  ë¹„êµí•˜ëŠ”ê²ƒì´ì•„ë‹ˆë¼ í•´ì‹œë§µì„ ë§Œë“¤ê³  í•œë²ˆì— ë¹„êµí•˜ëŠ” ê²ƒ
      
-     //Ã¹¹øÂ° ¼­ºê½ºÆ®¸µÀº Á¤¼®´ë·Î ÇÏ³ªÇÏ³ª ±¸ÇØÁà¾ßÇÔ.
+     //ì²«ë²ˆì§¸ ì„œë¸ŒìŠ¤íŠ¸ë§ì€ ì •ì„ëŒ€ë¡œ í•˜ë‚˜í•˜ë‚˜ êµ¬í•´ì¤˜ì•¼í•¨.
      for(int i=length-1; i>=0; i--){
           hash = (hash + (str[i]-'a')*basepower % mod) % mod;
-          //·Ñ¸µÇÒ¶§ ¶Ç ½áÁà¾ßÇØ¼­ °ü¸®
+          //ë¡¤ë§í• ë•Œ ë˜ ì¨ì¤˜ì•¼í•´ì„œ ê´€ë¦¬
           if(i > 0) basepower = (basepower*2) % mod;
      }
      hash_map[hash] = 0;
-
-     //·Ñ¸µ
+     //ë¡¤ë§
      for(int i=0; i<str.length() - length; i++){
           //hash -= (str[i]-'a')*basepower;
           hash = (hash - (str[i] - 'a') * basepower % mod + mod) % mod;
           hash = (hash*2 % mod + (str[i+length]-'a')) % mod;
-
           if(hash_map.count(hash) == 1){
                int startIdx = hash_map[hash];
-               // ½ÇÁ¦ ¹®ÀÚ¿­ ºñ±³
+               // ì‹¤ì œ ë¬¸ìžì—´ ë¹„êµ
                if (str.substr(startIdx, length) == str.substr(i + 1, length)) {
                     return 1;
                }
           }
           hash_map[hash] = i+1;
      }
-
      return -1;
 }
-
 int main(void)
 {
 		 cin >> l >> str;
      int ans=0;
      
-     //¶óºóÄ«ÇÁ´Â ±æÀÌ°¡ °°Àº ¹®ÀÚ¿­µéÀ» ÇØ½Ã·Î ±¸ºÐÇØ¼­ ¹®ÀÚ¿­±æÀÌ¸¦ ÀÌÁøÅ½»öÀ¸·Î Ã£¾Æ°£´Ù. 
-     //´õ ±ä ºÎºÐ¹®ÀÚ¿­ÀÌ ÀÖÀ¸¸é ±×º¸´Ù ÂªÀº ºÎºÐ¹®ÀÚ¿­ÀÇ Á¸Àç´Â º¸ÀåµÈ´Ù.
+     //ë¼ë¹ˆì¹´í”„ëŠ” ê¸¸ì´ê°€ ê°™ì€ ë¬¸ìžì—´ë“¤ì„ í•´ì‹œë¡œ êµ¬ë¶„í•´ì„œ ë¬¸ìžì—´ê¸¸ì´ë¥¼ ì´ì§„íƒìƒ‰ìœ¼ë¡œ ì°¾ì•„ê°„ë‹¤. 
+     //ë” ê¸´ ë¶€ë¶„ë¬¸ìžì—´ì´ ìžˆìœ¼ë©´ ê·¸ë³´ë‹¤ ì§§ì€ ë¶€ë¶„ë¬¸ìžì—´ì˜ ì¡´ìž¬ëŠ” ë³´ìž¥ëœë‹¤.
      int left = 1, right = l;
      while(left <= right){
           int mid = (left + right)/2;
-
           if(ravin_karp(mid) == 1){
                left = mid + 1;
                ans = mid;
@@ -64,7 +56,5 @@ int main(void)
           else
                right = mid - 1;
      }
-
      cout << ans;
      return 0;
-}
